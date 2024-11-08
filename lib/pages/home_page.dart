@@ -152,8 +152,8 @@ class _HomePageState extends State<HomePage>{
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+        
+        foregroundColor: Theme.of(context).colorScheme.primary,
       ),
       drawer: const MyDrawer(),
 
@@ -161,7 +161,7 @@ class _HomePageState extends State<HomePage>{
         onPressed: createNewHabit,
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.tertiary,
-        foregroundColor:Theme.of(context).colorScheme.inversePrimary ,
+        foregroundColor:Theme.of(context).colorScheme.primary ,
         child: const Icon(Icons.add),
       ),
       body: ListView(
@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage>{
         if(snapshot.hasData){
           return MyHeatMap(
             startDate: snapshot.data!, 
-            datasets: PrepareHeatMapDataset(currentHabits),
+            datasets: prepareHeatMapDataset(currentHabits),
           );
         }
         // no data returned case

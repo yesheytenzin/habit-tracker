@@ -3,6 +3,10 @@ import 'package:habit_tracker/database/habit_database.dart';
 import 'package:habit_tracker/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'pages/home_page.dart';
+import 'screens/splash_screen.dart';
+import 'screens/auth_choice_screen.dart';
+import 'screens/user_details_screen.dart';
+import 'screens/auth_screen.dart';
 
 
 void main() async {
@@ -27,13 +31,19 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
       theme: Provider.of<ThemeProvider>(context).themedata,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/auth_choice': (context) => const AuthChoiceScreen(),
+        '/user_details': (context) => const UserDetailsScreen(),
+        '/auth': (context) => const AuthScreen(),
+        '/home': (context) => const HomePage(),
+      },
     );
   }
 }

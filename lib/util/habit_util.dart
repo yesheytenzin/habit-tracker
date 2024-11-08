@@ -13,7 +13,7 @@ bool isHabitCompletedToday(List<DateTime> completedDays){
 }
 
 //heat map datset
-Map<DateTime,int> PrepareHeatMapDataset(List<Habit> habits){
+Map<DateTime,int> prepareHeatMapDataset(List<Habit> habits){
   Map<DateTime,int> dataset = {};
 
   for(var habit in habits){
