@@ -57,7 +57,8 @@ class _AuthScreenState extends State<AuthScreen> {
               Text(
                 'Please Enter Your Credentials', // Text at the top
                 style: TextStyle(
-                  fontSize: 24,
+                  fontFamily: 'Poppins',
+                  fontSize: 22,
                   color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.normal,
                 ),
@@ -75,6 +76,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ? 'Enter 6-digit PIN'
                       : 'Enter Password',
                   labelStyle: const TextStyle(
+                    fontFamily: 'Poppins',
                     color: Colors.blueGrey,
                     fontWeight: FontWeight.w500,
                   ),
@@ -160,10 +162,11 @@ class _AuthScreenState extends State<AuthScreen> {
                   }
                 },
                 child: const Text(
-                  'Login',
+                  'Log in',
                   style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               )

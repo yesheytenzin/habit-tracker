@@ -51,8 +51,9 @@ class _HomePageState extends State<HomePage> {
               Text(
                 "Create a New Habit",
                 style: TextStyle(
+                  fontFamily: 'Poppins',
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
@@ -62,9 +63,13 @@ class _HomePageState extends State<HomePage> {
                 controller: textController,
                 decoration: InputDecoration(
                   hintText: "Enter habit name",
+                  hintStyle: const TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w400,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.4)),
+                    borderSide: BorderSide(color: Colors.blueGrey.withOpacity(0.4)),
                   ),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
@@ -81,7 +86,10 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Text(
                       "Cancel",
-                      style: TextStyle(color:Theme.of(context).colorScheme.secondary),
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        color:Theme.of(context).colorScheme.secondary),
                     ),
                   ),
                   // Save button
@@ -96,7 +104,10 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Text(
                       "Save",
-                      style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).colorScheme.inversePrimary),
                     ),
                   ),
                 ],
@@ -206,13 +217,18 @@ class _HomePageState extends State<HomePage> {
         title: const Text(
           "Delete Habit",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w500,
             fontSize: 18,
           ),
           textAlign: TextAlign.center,
         ),
         content: const Text(
           "Are you sure you want to delete this habit?",
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w400,
+          ),
           textAlign: TextAlign.center,
         ),
         actionsAlignment: MainAxisAlignment.spaceEvenly,
@@ -226,7 +242,10 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.delete, color: Colors.white),
             label: Text(
               "Delete",
-              style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary)),
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).colorScheme.surface)),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
             ),
@@ -240,7 +259,10 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.cancel, color: Colors.white),
             label: Text(
               "Cancel",
-              style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),),
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).colorScheme.surface),),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.grey,
             ),
@@ -279,6 +301,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home),
             label: 'Home',
+            
           ),
           NavigationDestination(
             icon: Icon(Icons.show_chart_outlined),
@@ -286,6 +309,7 @@ class _HomePageState extends State<HomePage> {
             label: 'Progress',
           ),
         ],
+        
       ),
     );
   }
@@ -326,10 +350,11 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'habit completion status',
+            'Habit Completion Status',
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
@@ -337,6 +362,8 @@ class _HomePageState extends State<HomePage> {
           Text(
             'Progress over time',
             style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w400,
               fontSize: 16,
               color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
             ),
@@ -394,6 +421,8 @@ class _HomePageState extends State<HomePage> {
                             child: Text(
                               currentHabits[value.toInt()].name,
                               style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500,
                                 fontSize: 12,
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
@@ -417,6 +446,8 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             '${value.toInt()}%',
                             style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
                               fontSize: 12,
                               color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
                             ),
@@ -499,10 +530,11 @@ class _HomePageState extends State<HomePage> {
       Padding(
         padding: const EdgeInsets.all(7.0),  // Add padding around the text
         child: Text(
-          'your habits',
+          'Your habits',
           style: TextStyle(
-            fontSize: 24,  // Font size for the header
-            fontWeight: FontWeight.normal,  // Make the text bold
+            fontFamily: 'Poppins',
+            fontSize: 20,  // Font size for the header
+            fontWeight: FontWeight.w500,  // Make the text bold
             color: Theme.of(context).colorScheme.secondary,  // Text color
           ),
         ),

@@ -34,8 +34,18 @@ class _MyDrawerState extends State<MyDrawer> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete All Habits'),
-        content: const Text('Are you sure you want to delete all habits? This action cannot be undone.'),
+        title: Text('Delete All Habits',
+        style: TextStyle(
+          fontFamily: 'Poppin',
+          fontWeight: FontWeight.w400,
+          fontSize: 20,
+          color: Theme.of(context).colorScheme.secondary,
+        ),),
+        content: const Text('Are you sure you want to delete all habits? This action cannot be undone.',
+        style: TextStyle(
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.w400
+        ),),
         actions: [
           // Cancel Button
           TextButton(
@@ -43,6 +53,8 @@ class _MyDrawerState extends State<MyDrawer> {
             child: Text(
               'Cancel',
               style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 15,
                 color: Theme.of(context).colorScheme.secondary,
               ),
             ),
@@ -56,7 +68,10 @@ class _MyDrawerState extends State<MyDrawer> {
               // Show confirmation snackbar
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('All habits have been deleted'),
+                  content: Text('All habits have been deleted',
+                  style: TextStyle(
+                    fontFamily: 'Poppins'
+                  ),),
                   duration: Duration(seconds: 2),
                 ),
               );
@@ -64,6 +79,8 @@ class _MyDrawerState extends State<MyDrawer> {
             child: Text(
               'Delete',
               style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 15,
                 color: Theme.of(context).colorScheme.error,
               ),
             ),
@@ -106,8 +123,9 @@ class _MyDrawerState extends State<MyDrawer> {
                   Text(
                     userName,
                     style: TextStyle(
+                      fontFamily: 'Poppin',
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
@@ -116,7 +134,9 @@ class _MyDrawerState extends State<MyDrawer> {
                   Text(
                     userGender,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
                       color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
                     ),
                   ),
@@ -134,6 +154,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 Text(
                   'Dark Mode',
                   style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontSize: 16,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
@@ -169,8 +190,9 @@ class _MyDrawerState extends State<MyDrawer> {
                   Text(
                     'Delete All Habits',
                     style: TextStyle(
+                      fontFamily: 'Poppins',
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],

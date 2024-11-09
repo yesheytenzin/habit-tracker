@@ -70,6 +70,8 @@ class MyHabitTile extends StatelessWidget {
               title: Text(
                 text,
                 style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500,
                   color: isCompleted
                       ? Theme.of(context).colorScheme.inversePrimary
                       : Theme.of(context).colorScheme.surface,
