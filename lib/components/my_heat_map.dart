@@ -22,7 +22,7 @@ class MyHeatMap extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        shadowColor: Colors.black.withOpacity(0.9),
+        shadowColor: Theme.of(context).colorScheme.inversePrimary.withOpacity(0.9),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
