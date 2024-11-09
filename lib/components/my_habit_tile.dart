@@ -30,7 +30,7 @@ class MyHabitTile extends StatelessWidget{
             //edit option
             SlidableAction(
               onPressed: editHabit,
-              backgroundColor: Colors.grey.shade800,
+              backgroundColor: const Color(0xffb8c1ec),
               icon: Icons.settings,
               borderRadius: BorderRadius.circular(8),
               ),
@@ -38,7 +38,7 @@ class MyHabitTile extends StatelessWidget{
             //delete option
             SlidableAction(
               onPressed: deleteHabit,
-              backgroundColor: Colors.red,
+              backgroundColor: const Color(0xffe53170),
               icon: Icons.delete,
               borderRadius: BorderRadius.circular(8),
               ),
