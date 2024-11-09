@@ -16,7 +16,7 @@ class MyHeatMap extends StatelessWidget {
     DateTime endDate = DateTime(startDate.year, startDate.month + 1, 0);
     
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 12.0),
+      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 12.0),
       child: Card(
         elevation: 7,
         shape: RoundedRectangleBorder(
@@ -27,7 +27,7 @@ class MyHeatMap extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(7.0),
+              padding: const EdgeInsets.all(14.0),
               child: HeatMap(
                 startDate: startDate,
                 endDate: endDate,

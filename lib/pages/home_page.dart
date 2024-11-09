@@ -6,6 +6,7 @@ import 'package:habit_tracker/database/habit_database.dart';
 import 'package:habit_tracker/models/habit.dart';
 import 'package:habit_tracker/util/habit_util.dart';
 import 'package:provider/provider.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -78,9 +79,9 @@ class _HomePageState extends State<HomePage> {
                       Navigator.pop(context);
                       textController.clear();
                     },
-                    child: const Text(
+                    child: Text(
                       "Cancel",
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color:Theme.of(context).colorScheme.secondary),
                     ),
                   ),
                   // Save button
@@ -93,7 +94,10 @@ class _HomePageState extends State<HomePage> {
                         textController.clear();
                       }
                     },
-                    child: const Text("Save"),
+                    child: Text(
+                      "Save",
+                      style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
+                    ),
                   ),
                 ],
               ),
@@ -162,9 +166,9 @@ class _HomePageState extends State<HomePage> {
                       Navigator.pop(context);
                       textController.clear();
                     },
-                    child: const Text(
+                    child: Text(
                       "Cancel",
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color: Theme.of(context).colorScheme.secondary),
                     ),
                   ),
                   // Save button
@@ -177,7 +181,12 @@ class _HomePageState extends State<HomePage> {
                         textController.clear();
                       }
                     },
-                    child: const Text("Save"),
+                    child: Text(
+                      "Save",
+                      style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary ),
+                      
+                    ),
+                    
                   ),
                 ],
               ),
@@ -226,58 +235,207 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         elevation: 0,
-        foregroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       drawer: const MyDrawer(),
-      floatingActionButton: _selectedIndex == 0
-      ? FloatingActionButton(
-          onPressed: createNewHabit,
-          elevation: 0,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          foregroundColor: Theme.of(context).colorScheme.inversePrimary,
-          child: const Icon(Icons.add),
-        )
-      : null, // Hide floating action button when on Progress page
-
-      body: SingleChildScrollView(  // Wrap the body content in a SingleChildScrollView to avoid overflow
-        child: _selectedIndex == 0
-            ? _buildHabitLists() // Show Habit List on Home Page
-            : _buildHeatMap(), // Show Heat Map on Progress Page
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              size: 30, // Adjust size for better visibility
-            ),
+      floatingActionButton: _selectedIndex == 0 ? FloatingActionButton(
+        onPressed: createNewHabit,
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        foregroundColor: Theme.of(context).colorScheme.surface,
+        child: const Icon(Icons.add),
+      ) : null,
+      body: _selectedIndex == 0 
+          ? _buildHabitLists()  // Show habit list in home view
+          : _buildProgressView(),  // Show progress view
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onItemTapped,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.show_chart,
-              size: 30, // Adjust size for better visibility
-            ),
+          NavigationDestination(
+            icon: Icon(Icons.show_chart_outlined),
+            selectedIcon: Icon(Icons.show_chart),
             label: 'Progress',
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        selectedItemColor: Theme.of(context).colorScheme.secondary, // Selected item color
-        unselectedItemColor: Colors.grey, // Unselected item color
-        selectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.bold, // Make selected label bold
-          fontSize: 14, // Font size adjustment for labels
-        ),
-        unselectedLabelStyle: const TextStyle(
-          fontSize: 12, // Font size adjustment for unselected labels
-        ), // Background color of the bottom bar
-        elevation: 5, // Shadow effect for depth
-        type: BottomNavigationBarType.fixed, // Keeps the labels visible
       ),
-
     );
+  }
+
+  // Add this new method for the progress view
+  Widget _buildProgressView() {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _buildHeatMap(),
+          _buildCompletionGraph(),
+        ],
+      ),
+    );
+  }
+
+  // Add this new method for the completion graph
+  Widget _buildCompletionGraph() {
+    final habitDatabase = context.watch<HabitDatabase>();
+    final currentHabits = habitDatabase.currentHabits;
+
+    return Container(
+      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.inversePrimary.withOpacity(0.5),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+      height: 400,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'habit completion status',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Progress over time',
+            style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: BarChart(
+              BarChartData(
+                alignment: BarChartAlignment.spaceAround,
+                maxY: 100,
+                minY: 0,
+                barGroups: currentHabits.asMap().entries.map((entry) {
+                  final habit = entry.value;
+                  final completionRate = _calculateCompletionRate(habit);
+                  
+                  return BarChartGroupData(
+                    x: entry.key,
+                    barRods: [
+                      BarChartRodData(
+                        toY: completionRate,
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).colorScheme.primary,
+                            Theme.of(context).colorScheme.tertiary,
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
+                        width: 24,
+                        borderRadius: BorderRadius.circular(12),
+                        backDrawRodData: BackgroundBarChartRodData(
+                          show: true,
+                          toY: 100,
+                          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+                titlesData: FlTitlesData(
+                  show: true,
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 80,
+                      getTitlesWidget: (value, meta) {
+                        if (value.toInt() >= currentHabits.length) {
+                          return const Text('');
+                        }
+                        return Transform.rotate(
+                          angle: -1.5708, // -90 degrees in radians
+                          child: Container(
+                            width: 70,
+                            alignment: Alignment.center,
+                            child: Text(
+                              currentHabits[value.toInt()].name,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 40,
+                      interval: 20,
+                      getTitlesWidget: (value, meta) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Text(
+                            '${value.toInt()}%',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  rightTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  topTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                ),
+                gridData: FlGridData(
+                  show: true,
+                  drawVerticalLine: false,
+                  horizontalInterval: 20,
+                  getDrawingHorizontalLine: (value) {
+                    return FlLine(
+                      color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                      strokeWidth: 1,
+                    );
+                  },
+                ),
+                borderData: FlBorderData(show: false),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  double _calculateCompletionRate(Habit habit) {
+    if (habit.completedDays.isEmpty) return 0;
+    final totalDays = DateTime.now().difference(
+      habit.completedDays.first,
+    ).inDays + 1;
+    return (habit.completedDays.length / totalDays) * 100;
   }
 
   // Heat map
@@ -328,25 +486,27 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       // Habit List
-      ListView.builder(
-        itemCount: currentHabits.length,
-        shrinkWrap: true,
-        physics: const ClampingScrollPhysics(),
-        itemBuilder: (context, index) {
-          final habit = currentHabits[index];
-
-          // Check habit completion today
-          bool isCompletedToday = isHabitCompletedToday(habit.completedDays);
-
-          // Return habit tile UI
-          return MyHabitTile(
-            text: habit.name,
-            isCompleted: isCompletedToday,
-            onChanged: (value) => checkHabitOnOFf(value, habit),
-            editHabit: (value) => editHabitBox(habit),
-            deleteHabit: (value) => deleteHabitBox(habit),
-          );
-        },
+      Expanded(
+        child: ListView.builder(
+          itemCount: currentHabits.length,
+          shrinkWrap: true,
+          physics: const ClampingScrollPhysics(),
+          itemBuilder: (context, index) {
+            final habit = currentHabits[index];
+        
+            // Check habit completion today
+            bool isCompletedToday = isHabitCompletedToday(habit.completedDays);
+        
+            // Return habit tile UI
+            return MyHabitTile(
+              text: habit.name,
+              isCompleted: isCompletedToday,
+              onChanged: (value) => checkHabitOnOFf(value, habit),
+              editHabit: (value) => editHabitBox(habit),
+              deleteHabit: (value) => deleteHabitBox(habit),
+            );
+          },
+        ),
       ),
     ],
   );
