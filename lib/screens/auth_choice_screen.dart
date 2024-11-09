@@ -110,7 +110,8 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
                   style: TextStyle(
                     fontSize: 22, 
                     color: Color(0xff232946),
-                    fontWeight: FontWeight.normal),
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 50),
@@ -133,7 +134,13 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
                       ),
                     ),
                   ),
-                  child: const Text('Setup 6-digit PIN'),
+                  child: const Text(
+                    'Setup 6-digit PIN',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16,
+                    ),),
                 ),
 
                 const SizedBox(height: 16),
@@ -151,7 +158,13 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
                       ),
                     ),
                   ),
-                  child: const Text('Setup Password'),
+                  child: const Text(
+                    'Setup Password',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),),
                 ),
 
               ] else ...[
@@ -164,8 +177,9 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
                         'Setup ${_selectedMethod == 'PIN' ? 'PIN' : 'Password'}',
                         style: const TextStyle(
                           color: Color(0xff232946),
+                          fontFamily: 'Poppins',
                           fontSize: 20, 
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.w500,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -193,15 +207,38 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
                                 _selectedMethod == 'PIN' 
                                     ? 'PIN Requirements:'
                                     : 'Password Requirements:',
-                                style: const TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 5),
                               if (_selectedMethod == 'PIN') ...[
-                                const Text('• Must be exactly 6 digits'),
-                                const Text('• Can only contain numbers (0-9)'),
+                                const Text(
+                                  '• Must be exactly 6 digits',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 13,
+                                  ),),
+                                const Text('• Can only contain numbers (0-9)',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 13,
+                                  ),),
                               ] else ...[
-                                const Text('• Minimum 6 characters'),
-                                const Text('• Must contain both letters and numbers'),
+                                const Text('• Minimum 6 characters',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 13,
+                                  ),),
+                                const Text('• Must contain both letters and numbers',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 13,
+                                  ),),
                               ],
                             ],
                           ),
@@ -224,6 +261,8 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
                           fillColor: const Color(0xffeebbc3),
                           filled: true,
                           labelStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w400,
                             color: Color(0xff232946),
                           ),
                         ),
@@ -249,6 +288,8 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
                           fillColor: const Color(0xffb8c1ec),
                           filled: true,
                           labelStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w400,
                             color: Color(0xff232946),
                           )
                         ),
@@ -265,7 +306,12 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
                           padding: const EdgeInsets.all(16),
                           backgroundColor: const Color(0xff232946),
                         ),
-                        child: const Text('Continue'),
+                        child: const Text('Continue',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                        ),),
                       ),
                       const SizedBox(height: 12),
                       TextButton(
@@ -277,7 +323,10 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
                         },
                         child: const Text(
                           'Choose Different Method',
-                          style: TextStyle(color: Color(0xff272343)),
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xff272343)),
                         ),
                       ),
                     ],

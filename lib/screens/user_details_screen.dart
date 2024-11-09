@@ -30,19 +30,20 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(35.0),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 70),
+                const SizedBox(height: 60),
                 const Text(
                   'Login in to habit',
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontSize: 25,
-                    fontWeight: FontWeight.normal,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -57,6 +58,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     labelText: 'Username',
                     labelStyle: const TextStyle(
                       color: Colors.blueGrey,
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     hintText: 'Enter your username',
@@ -69,7 +71,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(
-                        color: Colors.blueGrey,
+                        color: Color(0xff232946),
                         width: 1.5,
                       ),
                     ),
@@ -103,9 +105,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
                   value: _selectedGender,
+                  dropdownColor: const Color(0xffeebbc3),
                   decoration: InputDecoration(
                     labelText: 'Gender',
                     labelStyle: const TextStyle(
+                      fontFamily: 'Poppins',
                       color: Colors.blueGrey,
                       fontWeight: FontWeight.w500,
                     ),
@@ -135,7 +139,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     ),
                   ),
                   items: ['Male', 'Female', 'Other']
-                      .map((g) => DropdownMenuItem(value: g, child: Text(g)))
+                      .map((g) => DropdownMenuItem(value: g, child: Text(
+                        g,
+                        style: const TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w400,
+                        ),)))
                       .toList(),
                   onChanged: (value) => setState(() => _selectedGender = value!),
                   validator: (value) {
@@ -166,7 +175,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                child: const Text('Continue'),
+                child: const Text('Continue',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500,
+                ),),
               ),
 
               ],
