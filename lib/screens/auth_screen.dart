@@ -67,6 +67,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
               TextFormField(
                 controller: _authController,
+                style: const TextStyle(
+                  color: Color(0xff272343),
+                ),
                 obscureText: true,
                 keyboardType: _authMethod == 'PIN'
                     ? TextInputType.number
