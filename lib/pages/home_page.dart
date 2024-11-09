@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePageState extends State<HomePage>{
+  int _selectedIndex = 0;
 
   @override
   void initState(){
@@ -22,6 +23,11 @@ class _HomePageState extends State<HomePage>{
     Provider.of<HabitDatabase>(context,listen: false).readHabits();
 
     super.initState();
+  }
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   //text controller
@@ -164,7 +170,8 @@ class _HomePageState extends State<HomePage>{
         foregroundColor:Theme.of(context).colorScheme.primary ,
         child: const Icon(Icons.add),
       ),
-      body: ListView(
+      body: _selectedIndex == 0 
+      ? ListView(
         children: [
           //heat map
           _buildHeatMap(),
@@ -172,8 +179,26 @@ class _HomePageState extends State<HomePage>{
           //habit list
           _buildHabitLists(),
         ],
+      ): Center(
+        child: Text(
+                'Progress Page (Empty for now)',
+                style: TextStyle(fontSize: 24, color: Theme.of(context).colorScheme.primary),
+              ),
       ),
-    );
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.show_chart),
+            label: 'Progress',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+    ));
   }
   //heat map
   Widget _buildHeatMap(){

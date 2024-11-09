@@ -17,20 +17,20 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true, // Automatically adjust layout for keyboard
-      backgroundColor: Colors.white, // Set your desired background color here
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 100), // Add spacing to replace the AppBar
+              const SizedBox(height: 70), // Add spacing to replace the AppBar
               const Text(
                 'welcome to habit sign up',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 23,
+                  fontFamily: 'Roboto Mono',
+                  fontWeight: FontWeight.normal,
                 ),
               ),
               const SizedBox(height: 70),
@@ -48,24 +48,48 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
   }
 
   List<Widget> _buildMethodSelection() {
-    return [
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
+  return [
+    const SizedBox(height: 30),
+    ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xff5f6c7b), // Primary button color
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 30), // Adjusted padding for better tap area
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16), // More pronounced rounded corners for modern look
         ),
-        onPressed: () => setState(() => _selectedMethod = 'PIN'),
-        child: const Text('Setup 6-digit PIN'),
-      ),
-      const SizedBox(height: 20),
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: Colors.green, // Text color
+        elevation: 8, // Slightly higher elevation for a more prominent shadow
+        shadowColor: const Color(0x55000000), // Softer shadow color
+        textStyle: const TextStyle(
+          fontSize: 18, // Larger text size for better readability
+          fontWeight: FontWeight.bold, // Bold text for emphasis
         ),
-        onPressed: () => setState(() => _selectedMethod = 'PASSWORD'),
-        child: const Text('Setup Password'),
       ),
-    ];
-  }
+      onPressed: () => setState(() => _selectedMethod = 'PIN'),
+      child: const Text('Setup 6-digit PIN'),
+    ),
+    const SizedBox(height: 20),
+    ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xffeebbc3), // Secondary button color
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 30), // Adjusted padding for consistency
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16), // Rounded corners for uniformity
+        ),
+        elevation: 8, // Similar elevation for consistency
+        shadowColor: const Color(0x55000000), // Soft shadow effect
+        textStyle: const TextStyle(
+          fontSize: 18, // Larger font size for readability
+          fontWeight: FontWeight.bold, // Bold text for consistency
+        ),
+      ),
+      onPressed: () => setState(() => _selectedMethod = 'PASSWORD'),
+      child: const Text('Setup Password'),
+    ),
+  ];
+}
+
 
   List<Widget> _buildAuthForm() {
     return [
@@ -77,23 +101,78 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
           keyboardType: _selectedMethod == 'PIN' ? TextInputType.number : TextInputType.text,
           decoration: InputDecoration(
             labelText: _selectedMethod == 'PIN' ? 'Enter 6-digit PIN' : 'Enter Password',
+            labelStyle: const TextStyle(
+              color: Colors.blueAccent, // Label color
+              fontWeight: FontWeight.w600, // Slightly bolder label
+            ),
+            hintText: _selectedMethod == 'PIN' ? 'Enter a 6-digit PIN' : 'Enter your password',
+            hintStyle: const TextStyle(
+              color: Colors.grey, // Lighter text for hint
+            ),
+            contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20), // Padding inside the field
+            filled: true, // Background color
+            fillColor: Colors.white,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.blueAccent, width: 2), // Focus border color
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.grey, width: 1), // Default border color
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.red, width: 1.5), // Error border color
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.red, width: 2), // Error focus border color
+            ),
           ),
           validator: (value) => _validateInput(value),
         ),
       ),
+
       const SizedBox(height: 20),
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: Colors.blueAccent, // Text color
+      Column(
+  children: [
+    ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white, 
+        backgroundColor: const Color(0xff5f6c7b), // Text color
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24), // More padding
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12), // Rounded corners
         ),
-        onPressed: _saveAuth,
-        child: const Text('Continue'),
+        elevation: 6, // Slight shadow for raised effect
+        textStyle: const TextStyle(
+          fontSize: 18, // Larger text size
+          fontWeight: FontWeight.bold, // Bold text
+        ),
       ),
-      const SizedBox(height: 12),
-      TextButton(
-        onPressed: _resetSelection,
-        child: const Text('Choose Different Method'),
+      onPressed: _saveAuth,
+      child: const Text('Continue'),
+    ),
+    const SizedBox(height: 12),
+    TextButton(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20), // Padding for button
+        backgroundColor: const Color(0xffeebbc3),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8), // Rounded corners
+        ),
+        side: const BorderSide(color: Colors.black54, width: 1.5), // Border for a subtle outline
+        textStyle: const TextStyle(
+          fontSize: 16, // Text size
+          fontWeight: FontWeight.w600, // Slightly bold for emphasis
+        ),
       ),
+      onPressed: _resetSelection,
+      child: const Text('Choose Different Method'),
+    ),
+  ],
+)
+
     ];
   }
 
