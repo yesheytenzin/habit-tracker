@@ -202,32 +202,54 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content: const Text("Are you sure you want to delete?"),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        title: const Text(
+          "Delete Habit",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        content: const Text(
+          "Are you sure you want to delete this habit?",
+          textAlign: TextAlign.center,
+        ),
+        actionsAlignment: MainAxisAlignment.spaceEvenly,
         actions: [
           // Delete button
-          MaterialButton(
+          ElevatedButton.icon(
             onPressed: () {
-              // Delete from DB
               context.read<HabitDatabase>().deleteHabit(habit.id);
-              // Pop box
               Navigator.pop(context);
             },
-            child: const Text("Delete"),
+            icon: const Icon(Icons.delete, color: Colors.white),
+            label: Text(
+              "Delete",
+              style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
           ),
           // Cancel button
-          MaterialButton(
+          ElevatedButton.icon(
             onPressed: () {
-              // Pop box
               Navigator.pop(context);
-              // Clear controller
               textController.clear();
             },
-            child: const Text("Cancel"),
-          )
+            icon: const Icon(Icons.cancel, color: Colors.white),
+            label: Text(
+              "Cancel",
+              style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey,
+            ),
+          ),
         ],
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -403,10 +425,10 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                   ),
-                  rightTitles: AxisTitles(
+                  rightTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
                   ),
-                  topTitles: AxisTitles(
+                  topTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
                   ),
                 ),

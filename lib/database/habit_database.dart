@@ -138,4 +138,15 @@ class HabitDatabase extends ChangeNotifier{
     //re-read habits
     readHabits();
   }
+
+  // Delete all habits
+  Future<void> deleteAllHabits() async {
+    await isar.writeTxn(() async {
+      await isar.habits.clear();
+    });
+    
+    // Clear the current habits list
+    currentHabits.clear();
+    notifyListeners();
+  }
 }
