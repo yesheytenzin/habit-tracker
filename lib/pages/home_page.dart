@@ -239,7 +239,6 @@ class _HomePageState extends State<HomePage> {
               context.read<HabitDatabase>().deleteHabit(habit.id);
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.delete, color: Colors.white),
             label: Text(
               "Delete",
               style: TextStyle(
@@ -256,7 +255,6 @@ class _HomePageState extends State<HomePage> {
               Navigator.pop(context);
               textController.clear();
             },
-            icon: const Icon(Icons.cancel, color: Colors.white),
             label: Text(
               "Cancel",
               style: TextStyle(
