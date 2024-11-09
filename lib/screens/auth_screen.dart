@@ -46,7 +46,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[50], // Set a color of your choice
+      backgroundColor: Theme.of(context).colorScheme.surface, // Set a color of your choice
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -54,10 +54,11 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Column(
             children: [
               const SizedBox(height: 100),
-              const Text(
+              Text(
                 'Please Enter Your Credentials', // Text at the top
                 style: TextStyle(
                   fontSize: 24,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -147,6 +148,9 @@ class _AuthScreenState extends State<AuthScreen> {
                   minimumSize: const Size(double.infinity, 48),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
+                    side: const BorderSide(
+                      color: Color(0xff232946),
+                    )
                   ),
                   elevation: 5.0,
                 ),

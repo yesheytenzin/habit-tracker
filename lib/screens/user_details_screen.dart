@@ -36,7 +36,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 100),
+                const SizedBox(height: 70),
                 const Text(
                   'Login in to habit',
                   textAlign: TextAlign.center,
@@ -151,10 +151,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 onPressed: _saveUserDetails,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffeebbc3),
-                  foregroundColor: Colors.white,
+                  foregroundColor: const Color(0xff232946),
                   padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 30),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
+                    side: const BorderSide(
+                    color: Color(0xff232946), // Set the border color
+                    width: 2, // Set the border width
+                  ),
                   ),
                   elevation: 5,
                   textStyle: const TextStyle(

@@ -58,13 +58,11 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
   bool _validateInputs() {
     _clearError();
     
-    // Check for empty fields
     if (_authController.text.isEmpty || _confirmController.text.isEmpty) {
       _showError('All fields must be filled');
       return false;
     }
 
-    // PIN Validation
     if (_selectedMethod == 'PIN') {
       if (_authController.text.length != 6) {
         _showError('PIN must be exactly 6 digits');
@@ -74,9 +72,7 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
         _showError('PIN can only contain numbers');
         return false;
       }
-    } 
-    // Password Validation
-    else {
+    } else {
       if (_authController.text.length < 6) {
         _showError('Password must be at least 6 characters long');
         return false;
@@ -88,7 +84,6 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
       }
     }
 
-    // Confirm matching entries
     if (_authController.text != _confirmController.text) {
       _showError('Entries do not match');
       return false;
@@ -100,160 +95,197 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Setup Authentication'),
-        automaticallyImplyLeading: false,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (_selectedMethod == null) ...[
-              const Text(
-                'Choose your authentication method',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: () => _handleMethodSelection('PIN'),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(20),
+      resizeToAvoidBottomInset: true,
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(34.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 50),
+              if (_selectedMethod == null) ...[
+                const Text(
+                  'Choose your authentication method',
+                  style: TextStyle(
+                    fontSize: 22, 
+                    color: Color(0xff232946),
+                    fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.center,
                 ),
-                child: const Text('Setup 6-digit PIN'),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () => _handleMethodSelection('PASSWORD'),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(20),
+                const SizedBox(height: 50),
+                Image.asset(
+                  'assets/signup.png',
+                  height: 300,
                 ),
-                child: const Text('Setup Password'),
-              ),
-            ] else ...[
-              Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Setup ${_selectedMethod == 'PIN' ? 'PIN' : 'Password'}',
-                      style: const TextStyle(
-                        fontSize: 18, 
-                        fontWeight: FontWeight.bold
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () => _handleMethodSelection('PIN'),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(20),
+                    backgroundColor: const Color(0xffb8c1ec),
+                    foregroundColor: const Color(0xff272343),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8), // Adjust border radius as needed
+                      side: const BorderSide(
+                        color:  Color(0xff272343), // Border color
+                        width: 2, // Border width
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 24),
-                    
-                    // Requirements Card
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _selectedMethod == 'PIN' 
-                                  ? 'PIN Requirements:'
-                                  : 'Password Requirements:',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 8),
-                            if (_selectedMethod == 'PIN') ...[
-                              const Text('• Must be exactly 6 digits'),
-                              const Text('• Can only contain numbers (0-9)'),
-                            ] else ...[
-                              const Text('• Minimum 6 characters'),
-                              const Text('• Must contain both letters and numbers'),
-                              const Text('• No special characters required'),
+                  ),
+                  child: const Text('Setup 6-digit PIN'),
+                ),
+
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () => _handleMethodSelection('PASSWORD'),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(20),
+                    backgroundColor: const Color(0xffeebbc3),
+                    foregroundColor: const Color(0xff5f6c7b),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8), // Adjust border radius as needed
+                      side: const BorderSide(
+                        color: Color(0xff5f6c7b), // Border color
+                        width: 2, // Border width
+                      ),
+                    ),
+                  ),
+                  child: const Text('Setup Password'),
+                ),
+
+              ] else ...[
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Setup ${_selectedMethod == 'PIN' ? 'PIN' : 'Password'}',
+                        style: const TextStyle(
+                          color: Color(0xff232946),
+                          fontSize: 20, 
+                          fontWeight: FontWeight.normal,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 24),
+                      Image.asset(
+                        'assets/pass.png',
+                        height: 300,
+                      ),
+                      const SizedBox(height: 24),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), // Set the border radius
+                          side: const BorderSide(
+                            color: Color(0xff232946), // Border color
+                            width: 2, // Border width
+                          ),
+                        ),
+                        elevation: 5, // Optional: Adds shadow to the card
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _selectedMethod == 'PIN' 
+                                    ? 'PIN Requirements:'
+                                    : 'Password Requirements:',
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 8),
+                              if (_selectedMethod == 'PIN') ...[
+                                const Text('• Must be exactly 6 digits'),
+                                const Text('• Can only contain numbers (0-9)'),
+                              ] else ...[
+                                const Text('• Minimum 6 characters'),
+                                const Text('• Must contain both letters and numbers'),
+                              ],
                             ],
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
 
-                    // First Input Field
-                    TextFormField(
-                      controller: _authController,
-                      obscureText: true,
-                      keyboardType: _selectedMethod == 'PIN' 
-                          ? TextInputType.number 
-                          : TextInputType.text,
-                      decoration: InputDecoration(
-                        labelText: _selectedMethod == 'PIN' 
-                            ? 'Enter 6-digit PIN' 
-                            : 'Enter Password',
-                        errorText: _errorMessage,
-                        prefixIcon: Icon(_selectedMethod == 'PIN' 
-                            ? Icons.pin : Icons.lock),
-                        border: const OutlineInputBorder(),
-                        hintText: '',
-                        counterText: '',
-                        fillColor: Colors.transparent,
-                        filled: true,
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        controller: _authController,
+                        obscureText: true,
+                        keyboardType: _selectedMethod == 'PIN' 
+                            ? TextInputType.number 
+                            : TextInputType.text,
+                        decoration: InputDecoration(
+                          labelText: _selectedMethod == 'PIN' 
+                              ? 'Enter 6-digit PIN' 
+                              : 'Enter Password',
+                          errorText: _errorMessage,
+                          border: const OutlineInputBorder(),
+                          fillColor: const Color(0xffeebbc3),
+                          filled: true,
+                          labelStyle: const TextStyle(
+                            color: Color(0xff232946),
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _authController.clear();
+                            _errorMessage = null;
+                          });
+                        },
                       ),
-                      onTap: () {
-                        setState(() {
-                          _authController.clear();
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        controller: _confirmController,
+                        obscureText: true,
+                        keyboardType: _selectedMethod == 'PIN' 
+                            ? TextInputType.number 
+                            : TextInputType.text,
+                        decoration: InputDecoration(
+                          labelText: _selectedMethod == 'PIN' 
+                              ? 'Confirm PIN' 
+                              : 'Confirm Password',
+                          border: const OutlineInputBorder(),
+                          fillColor: const Color(0xffb8c1ec),
+                          filled: true,
+                          labelStyle: const TextStyle(
+                            color: Color(0xff232946),
+                          )
+                        ),
+                        onTap: () {
+                          _confirmController.clear();
                           _errorMessage = null;
-                        });
-                      },
-                      initialValue: null,
-                      enableInteractiveSelection: true,
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Confirm Input Field
-                    TextFormField(
-                      controller: _confirmController,
-                      obscureText: true,
-                      keyboardType: _selectedMethod == 'PIN' 
-                          ? TextInputType.number 
-                          : TextInputType.text,
-                      decoration: InputDecoration(
-                        labelText: _selectedMethod == 'PIN' 
-                            ? 'Confirm PIN' 
-                            : 'Confirm Password',
-                        prefixIcon: Icon(_selectedMethod == 'PIN' 
-                            ? Icons.pin : Icons.lock),
-                        border: const OutlineInputBorder(),
+                          setState(() {});
+                        },
                       ),
-                      onTap: () {
-                        _confirmController.clear();
-                        _errorMessage = null;
-                        setState(() {});
-                      },
-                    ),
-                    const SizedBox(height: 24),
-
-                    // Continue Button
-                    ElevatedButton(
-                      onPressed: _saveAuth,
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(16),
+                      const SizedBox(height: 24),
+                      ElevatedButton(
+                        onPressed: _saveAuth,
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(16),
+                          backgroundColor: const Color(0xff232946),
+                        ),
+                        child: const Text('Continue'),
                       ),
-                      child: const Text('Continue'),
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Back Button
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _selectedMethod = null;
-                          _clearFields();
-                        });
-                      },
-                      child: const Text('Choose Different Method'),
-                    ),
-                  ],
+                      const SizedBox(height: 12),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _selectedMethod = null;
+                            _clearFields();
+                          });
+                        },
+                        child: const Text(
+                          'Choose Different Method',
+                          style: TextStyle(color: Color(0xff272343)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -262,7 +294,6 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
   Future<void> _saveAuth() async {
     if (!_validateInputs()) {
       _showError('Too many failed attempts. Please try again later.');
-      // Reset fields after delay for both PIN and Password
       Future.delayed(const Duration(seconds: 30), () {
         setState(() {
           _authController.clear();
@@ -278,12 +309,12 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
       await prefs.setString('auth_value', _authController.text);
       
       if (!mounted) return;
-      
-      // Show success message
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Authentication setup successful!'),
           backgroundColor: Colors.green,
+          duration: Duration(seconds: 2)
         ),
       );
 
@@ -299,4 +330,4 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen> {
     _confirmController.dispose();
     super.dispose();
   }
-} 
+}
