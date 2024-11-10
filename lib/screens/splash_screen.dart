@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';  // Import the lottie package
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -40,15 +41,13 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/habits.png', // Make sure to add your logo to assets
-              width: 200,
-              height: 200,
-            ),
             const SizedBox(height: 24),
+            Lottie.asset('assets/loading.json', width: 400, height: 400),  // Use your Lottie animation
+            const SizedBox(height: 24),
+            
           ],
         ),
       ),
     );
   }
-} 
+}
