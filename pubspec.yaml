@@ -33,6 +33,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/mood/
 
   fonts:
     
