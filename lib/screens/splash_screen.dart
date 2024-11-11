@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';  // Import the lottie package
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +14,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark, // Dark icons on light background
+      ));
+    });
     _checkSetupStatus();
   }
 
