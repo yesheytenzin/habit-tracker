@@ -484,41 +484,50 @@ class _HomePageState extends State<HomePage> {
   double _calculateCompletionRate(Habit habit) {
     if (habit.completedDays.isEmpty) return 0;
 
-    // Sort the completedDays to ensure chronological order
+    // Sort completedDays to ensure chronological order
     habit.completedDays.sort();
 
-    // Calculate total days from the first completed day to today
+    // Calculate the total possible days from the first completion date to today
     final totalDays = DateTime.now().difference(habit.completedDays.first).inDays + 1;
 
-    int missedDays = 0;
-    double completionRate = 100.0;
+    // Consistency calculation: base completion rate as the ratio of completed to total days
+    double completionRate = (habit.completedDays.length / totalDays) * 100;
 
-    // Loop through the habit completed days and track missed days
+    // Define forgiveness buffer (e.g., one missed day every 7 days is forgiven)
+    const forgivenessInterval = 7;
+    int totalMissedDays = 0;
+
     for (int i = 1; i < habit.completedDays.length; i++) {
       final diff = habit.completedDays[i].difference(habit.completedDays[i - 1]).inDays;
 
-      // If there's a gap (more than 1 day missed), apply a penalty
+      // Count missed days beyond the forgiveness buffer
       if (diff > 1) {
-        missedDays += (diff - 1); // Count missed days
-        // Decrease completion rate for each missed day
-        completionRate -= (diff - 1) * 10; // Decrease 10% for each missed day
+        int missed = diff - 1;
+
+        // Apply forgiveness: every 7 days missed reduces actual penalties
+        if (missed > forgivenessInterval) {
+          missed -= forgivenessInterval;
+        } else {
+          missed = 0; // No penalty within forgiveness buffer
+        }
+
+        totalMissedDays += missed;
       }
     }
 
-    // After the loop, we calculate the completion rate as the ratio of completed days to total days
-    final totalCompletedDays = habit.completedDays.length;
-    completionRate = (totalCompletedDays / totalDays) * 100;
+    // Progressive decay for penalty: each missed day beyond buffer reduces rate by a smaller margin
+    double penalty = 2.0; // Start with a 2% penalty per missed day beyond forgiveness
+    double decayFactor = 0.8; // 20% decay in penalty for each subsequent missed day
 
-    // Apply the missed days penalty
-    if (missedDays > 0) {
-      completionRate -= missedDays * 10; // Decrease for each missed day
+    for (int i = 0; i < totalMissedDays; i++) {
+      completionRate -= penalty;
+      penalty *= decayFactor; // Decrease penalty progressively
     }
 
     // Ensure the completion rate never goes below 0% or above 100%
-    completionRate = completionRate.clamp(0, 100);
+    return completionRate.clamp(0, 100);
+}
 
-    return completionRate;
-  }
 
 
   // Heat map
