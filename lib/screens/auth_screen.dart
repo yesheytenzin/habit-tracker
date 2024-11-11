@@ -53,7 +53,7 @@ class _AuthScreenState extends State<AuthScreen> {
           key: _formKey,
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 70),
               Text(
                 'Please Enter Your Credentials', // Text at the top
                 style: TextStyle(
@@ -63,7 +63,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   fontWeight: FontWeight.normal,
                 ),
               ),
-              const SizedBox(height: 20), // Add space between the text and the form
+              const SizedBox(height: 50), // Add space between the text and the form
 
               TextFormField(
                 controller: _authController,

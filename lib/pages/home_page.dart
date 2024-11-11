@@ -7,6 +7,7 @@ import 'package:habit_tracker/models/habit.dart';
 import 'package:habit_tracker/util/habit_util.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -559,48 +560,69 @@ class _HomePageState extends State<HomePage> {
 
   // Habit list
   Widget _buildHabitLists() {
-  final habitDatabase = context.watch<HabitDatabase>();
+    final habitDatabase = context.watch<HabitDatabase>();
+    List<Habit> currentHabits = habitDatabase.currentHabits;
 
-  List<Habit> currentHabits = habitDatabase.currentHabits;
+    // Get today's date and month
+    String todayDate = DateFormat('d').format(DateTime.now()); // Day
+    String todayMonth = DateFormat('MMMM').format(DateTime.now());
+    String todayDay = DateFormat('EEE').format(DateTime.now()); 
 
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.center,  // Align text to the left
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(7.0),  // Add padding around the text
-        child: Text(
-          'Your habits',
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontSize: 20,  // Font size for the header
-            fontWeight: FontWeight.w500,  // Make the text bold
-            color: Theme.of(context).colorScheme.secondary,  // Text color
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center, // Align text to the left
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(7.0), // Add padding around the text
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start, // Align items to the start
+            children: [
+              const SizedBox(width: 20),
+              Text(
+                'Your habits',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 20, // Font size for the header
+                  fontWeight: FontWeight.w500, // Make the text bold
+                  color: Theme.of(context).colorScheme.secondary, // Text color
+                ),
+              ),
+              const SizedBox(width: 40), // Add some space between the text and date
+              Text(
+                '$todayDate $todayMonth $todayDay', // Display current date and month
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 16, // Font size for the date
+                  color: Theme.of(context).colorScheme.secondary.withOpacity(0.7), // Slightly lighter color
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
-      ),
-      // Habit List
-      Expanded(
-        child: ListView.builder(
-          itemCount: currentHabits.length,
-          shrinkWrap: true,
-          physics: const ClampingScrollPhysics(),
-          itemBuilder: (context, index) {
-            final habit = currentHabits[index];
-        
-            // Check habit completion today
-            bool isCompletedToday = isHabitCompletedToday(habit.completedDays);
-        
-            // Return habit tile UI
-            return MyHabitTile(
-              text: habit.name,
-              isCompleted: isCompletedToday,
-              onChanged: (value) => checkHabitOnOFf(value, habit),
-              editHabit: (value) => editHabitBox(habit),
-              deleteHabit: (value) => deleteHabitBox(habit),
-            );
-          },
+        // Habit List
+        Expanded(
+          child: ListView.builder(
+            itemCount: currentHabits.length,
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemBuilder: (context, index) {
+              final habit = currentHabits[index];
+
+              // Check habit completion today
+              bool isCompletedToday = isHabitCompletedToday(habit.completedDays);
+
+              // Return habit tile UI
+              return MyHabitTile(
+                text: habit.name,
+                isCompleted: isCompletedToday,
+                onChanged: (value) => checkHabitOnOFf(value, habit),
+                editHabit: (value) => editHabitBox(habit),
+                deleteHabit: (value) => deleteHabitBox(habit),
+              );
+            },
+          ),
         ),
-      ),
-    ],
-  );
-}}
+      ],
+    );
+  }
+}
