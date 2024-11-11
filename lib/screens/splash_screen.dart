@@ -25,11 +25,17 @@ class _SplashScreenState extends State<SplashScreen> {
     final hasUserDetails = prefs.getString('username') != null;
 
     if (!hasAuth) {
-      Navigator.pushReplacementNamed(context, '/auth_choice');
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/auth_choice');
+      }
     } else if (!hasUserDetails) {
-      Navigator.pushReplacementNamed(context, '/user_details');
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/user_details');
+      }
     } else {
-      Navigator.pushReplacementNamed(context, '/auth');
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/auth');
+      }
     }
   }
 

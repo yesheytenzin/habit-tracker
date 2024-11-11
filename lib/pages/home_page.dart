@@ -483,11 +483,43 @@ class _HomePageState extends State<HomePage> {
 
   double _calculateCompletionRate(Habit habit) {
     if (habit.completedDays.isEmpty) return 0;
-    final totalDays = DateTime.now().difference(
-      habit.completedDays.first,
-    ).inDays + 1;
-    return (habit.completedDays.length / totalDays) * 100;
+
+    // Sort the completedDays to ensure chronological order
+    habit.completedDays.sort();
+
+    // Calculate total days from the first completed day to today
+    final totalDays = DateTime.now().difference(habit.completedDays.first).inDays + 1;
+
+    int missedDays = 0;
+    double completionRate = 100.0;
+
+    // Loop through the habit completed days and track missed days
+    for (int i = 1; i < habit.completedDays.length; i++) {
+      final diff = habit.completedDays[i].difference(habit.completedDays[i - 1]).inDays;
+
+      // If there's a gap (more than 1 day missed), apply a penalty
+      if (diff > 1) {
+        missedDays += (diff - 1); // Count missed days
+        // Decrease completion rate for each missed day
+        completionRate -= (diff - 1) * 10; // Decrease 10% for each missed day
+      }
+    }
+
+    // After the loop, we calculate the completion rate as the ratio of completed days to total days
+    final totalCompletedDays = habit.completedDays.length;
+    completionRate = (totalCompletedDays / totalDays) * 100;
+
+    // Apply the missed days penalty
+    if (missedDays > 0) {
+      completionRate -= missedDays * 10; // Decrease for each missed day
+    }
+
+    // Ensure the completion rate never goes below 0% or above 100%
+    completionRate = completionRate.clamp(0, 100);
+
+    return completionRate;
   }
+
 
   // Heat map
   Widget _buildHeatMap() {
