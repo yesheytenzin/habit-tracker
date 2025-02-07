@@ -70,9 +70,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.blueGrey.withOpacity(0.4)),
+                    borderSide:
+                        BorderSide(color: Colors.blueGrey.withOpacity(0.4)),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
               ),
               const SizedBox(height: 20),
@@ -88,9 +90,9 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       "Cancel",
                       style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                        color:Theme.of(context).colorScheme.secondary),
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.secondary),
                     ),
                   ),
                   // Save button
@@ -106,9 +108,9 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       "Save",
                       style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).colorScheme.inversePrimary),
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.inversePrimary),
                     ),
                   ),
                 ],
@@ -120,7 +122,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
   // Check habit on/off
   void checkHabitOnOFf(bool? value, Habit habit) {
     // Update habit status
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> {
 
   // Edit habit
   void editHabitBox(Habit habit) {
-  // Set controller text to current habit name
+    // Set controller text to current habit name
     textController.text = habit.name;
 
     showDialog(
@@ -165,7 +166,8 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(color: Colors.grey.withOpacity(0.4)),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
               ),
               const SizedBox(height: 20),
@@ -180,7 +182,8 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Text(
                       "Cancel",
-                      style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary),
                     ),
                   ),
                   // Save button
@@ -188,17 +191,18 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       String newHabitName = textController.text;
                       if (newHabitName.isNotEmpty) {
-                        context.read<HabitDatabase>().updatehabitName(habit.id, newHabitName);
+                        context
+                            .read<HabitDatabase>()
+                            .updatehabitName(habit.id, newHabitName);
                         Navigator.pop(context);
                         textController.clear();
                       }
                     },
                     child: Text(
                       "Save",
-                      style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary ),
-                      
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary),
                     ),
-                    
                   ),
                 ],
               ),
@@ -240,12 +244,11 @@ class _HomePageState extends State<HomePage> {
               context.read<HabitDatabase>().deleteHabit(habit.id);
               Navigator.pop(context);
             },
-            label: Text(
-              "Delete",
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).colorScheme.surface)),
+            label: Text("Delete",
+                style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).colorScheme.surface)),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
             ),
@@ -259,9 +262,10 @@ class _HomePageState extends State<HomePage> {
             label: Text(
               "Cancel",
               style: TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).colorScheme.surface),),
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500,
+                  color: Theme.of(context).colorScheme.surface),
+            ),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.grey,
             ),
@@ -270,7 +274,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -282,16 +285,18 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       drawer: const MyDrawer(),
-      floatingActionButton: _selectedIndex == 0 ? FloatingActionButton(
-        onPressed: createNewHabit,
-        elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        foregroundColor: Theme.of(context).colorScheme.surface,
-        child: const Icon(Icons.add),
-      ) : null,
-      body: _selectedIndex == 0 
-          ? _buildHabitLists()  // Show habit list in home view
-          : _buildProgressView(),  // Show progress view
+      floatingActionButton: _selectedIndex == 0
+          ? FloatingActionButton(
+              onPressed: createNewHabit,
+              elevation: 0,
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              foregroundColor: Theme.of(context).colorScheme.surface,
+              child: const Icon(Icons.add),
+            )
+          : null,
+      body: _selectedIndex == 0
+          ? _buildHabitLists() // Show habit list in home view
+          : _buildProgressView(), // Show progress view
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
         onDestinationSelected: _onItemTapped,
@@ -300,7 +305,6 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home),
             label: 'Home',
-            
           ),
           NavigationDestination(
             icon: Icon(Icons.show_chart_outlined),
@@ -308,7 +312,6 @@ class _HomePageState extends State<HomePage> {
             label: 'Progress',
           ),
         ],
-        
       ),
     );
   }
@@ -338,7 +341,8 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.inversePrimary.withOpacity(0.5),
+            color:
+                Theme.of(context).colorScheme.inversePrimary.withOpacity(0.5),
             blurRadius: 10,
             spreadRadius: 2,
           ),
@@ -377,7 +381,7 @@ class _HomePageState extends State<HomePage> {
                 barGroups: currentHabits.asMap().entries.map((entry) {
                   final habit = entry.value;
                   final completionRate = _calculateCompletionRate(habit);
-                  
+
                   return BarChartGroupData(
                     x: entry.key,
                     barRods: [
@@ -396,7 +400,10 @@ class _HomePageState extends State<HomePage> {
                         backDrawRodData: BackgroundBarChartRodData(
                           show: true,
                           toY: 100,
-                          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.1),
                         ),
                       ),
                     ],
@@ -448,7 +455,10 @@ class _HomePageState extends State<HomePage> {
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
-                              color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withOpacity(0.7),
                             ),
                           ),
                         );
@@ -468,7 +478,10 @@ class _HomePageState extends State<HomePage> {
                   horizontalInterval: 20,
                   getDrawingHorizontalLine: (value) {
                     return FlLine(
-                      color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(0.1),
                       strokeWidth: 1,
                     );
                   },
@@ -489,7 +502,8 @@ class _HomePageState extends State<HomePage> {
     habit.completedDays.sort();
 
     // Calculate the total possible days from the first completion date to today
-    final totalDays = DateTime.now().difference(habit.completedDays.first).inDays + 1;
+    final totalDays =
+        DateTime.now().difference(habit.completedDays.first).inDays + 1;
 
     // Consistency calculation: base completion rate as the ratio of completed to total days
     double completionRate = (habit.completedDays.length / totalDays) * 100;
@@ -499,7 +513,8 @@ class _HomePageState extends State<HomePage> {
     int totalMissedDays = 0;
 
     for (int i = 1; i < habit.completedDays.length; i++) {
-      final diff = habit.completedDays[i].difference(habit.completedDays[i - 1]).inDays;
+      final diff =
+          habit.completedDays[i].difference(habit.completedDays[i - 1]).inDays;
 
       // Count missed days beyond the forgiveness buffer
       if (diff > 1) {
@@ -517,8 +532,10 @@ class _HomePageState extends State<HomePage> {
     }
 
     // Progressive decay for penalty: each missed day beyond buffer reduces rate by a smaller margin
-    double penalty = 2.0; // Start with a 2% penalty per missed day beyond forgiveness
-    double decayFactor = 0.8; // 20% decay in penalty for each subsequent missed day
+    double penalty =
+        2.0; // Start with a 2% penalty per missed day beyond forgiveness
+    double decayFactor =
+        0.8; // 20% decay in penalty for each subsequent missed day
 
     for (int i = 0; i < totalMissedDays; i++) {
       completionRate -= penalty;
@@ -527,9 +544,7 @@ class _HomePageState extends State<HomePage> {
 
     // Ensure the completion rate never goes below 0% or above 100%
     return completionRate.clamp(0, 100);
-}
-
-
+  }
 
   // Heat map
   Widget _buildHeatMap() {
@@ -566,7 +581,7 @@ class _HomePageState extends State<HomePage> {
     // Get today's date and month
     String todayDate = DateFormat('d').format(DateTime.now()); // Day
     String todayMonth = DateFormat('MMMM').format(DateTime.now());
-    String todayDay = DateFormat('EEE').format(DateTime.now()); 
+    String todayDay = DateFormat('EEE').format(DateTime.now());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center, // Align text to the left
@@ -574,7 +589,8 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: const EdgeInsets.all(7.0), // Add padding around the text
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start, // Align items to the start
+            mainAxisAlignment:
+                MainAxisAlignment.start, // Align items to the start
             children: [
               const SizedBox(width: 20),
               Text(
@@ -586,13 +602,17 @@ class _HomePageState extends State<HomePage> {
                   color: Theme.of(context).colorScheme.secondary, // Text color
                 ),
               ),
-              const SizedBox(width: 40), // Add some space between the text and date
+              const SizedBox(
+                  width: 40), // Add some space between the text and date
               Text(
                 '$todayDate $todayMonth $todayDay', // Display current date and month
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 16, // Font size for the date
-                  color: Theme.of(context).colorScheme.secondary.withOpacity(0.7), // Slightly lighter color
+                  color: Theme.of(context)
+                      .colorScheme
+                      .secondary
+                      .withOpacity(0.7), // Slightly lighter color
                 ),
               ),
               const SizedBox(height: 20),
@@ -609,7 +629,8 @@ class _HomePageState extends State<HomePage> {
               final habit = currentHabits[index];
 
               // Check habit completion today
-              bool isCompletedToday = isHabitCompletedToday(habit.completedDays);
+              bool isCompletedToday =
+                  isHabitCompletedToday(habit.completedDays);
 
               // Return habit tile UI
               return MyHabitTile(
